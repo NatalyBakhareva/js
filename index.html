@@ -6,60 +6,21 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <script src="js/jquery-1.11.1.js"></script>
     <script src="js/bootstrap.js"></script>
-
-
-    <script>
-
-        //placeholder show and hide
-        $(document).ready(function(){
-            $('#first').keyup(function(){
-                if($('#first').val()=="")
-                {
-                    $('#placeholder').show();
-                }
-                else
-                {
-                    $('#placeholder').hide();
-                }
-            })
-        });
-
-    </script>
+    <script src="js/task1.js"></script>
 
 </head>
 <body>
 
-    <div class="modal-body" id="firsttask">
-        <form>
-            <label> <input type="text" id="first" ><br />
+    <h3>Enter you name and submit</h3>
+    <div id="firsttask">
+
+        <form onsubmit="var name = $('#first').val(); alert('Hello, '+name+'!')">
+            <label> <input type="text" name="name" id="first" ><br />
                 <span id="placeholder">Your name, please...</span>
             </label>
-            <button class="btn btn-success ">Send to server</button>
         </form>
+
     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 </body>
