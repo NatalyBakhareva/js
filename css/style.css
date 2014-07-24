@@ -1,0 +1,15 @@
+form label{
+    position: relative;
+}
+
+form label #placeholder{
+    position: absolute;
+    top:1px;
+    left: 8px;
+}
+
+#firsttask {
+    position: relative;
+    margin:20px auto;
+    width: 500px;
+}
