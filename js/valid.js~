@@ -6,8 +6,7 @@ var fio,
     login,
     pass,
     pass2,
-    textArea,
-    isvalid = true;
+    textArea;
 
 validate = function(){
     validFio();
@@ -16,12 +15,12 @@ validate = function(){
     validPass2();
     validAbout();
 
-    if(validFio()&&validLogin()&&validPass()&&validPass2()&&validAbout())
-    {
-    	return true;
-    }
-
-        
+        if(validFio()&&validLogin()&&validPass()&&validPass2()&&validAbout()){
+            send();
+        }
+        else{
+            return false;
+        }
 }
 
 
@@ -65,7 +64,7 @@ function validLogin(){
 
     if(resPass == -1 || pass==false || pass.length<8){
         $("#pass").next().text("Must be over 8 char. Only latin and punctuation marks").css("color","red");
-        return false
+        return false;
     }
     else{
         $("#pass").next().text("Yes").css("color","green");
@@ -80,7 +79,7 @@ function validPass2(){
 
     if(pass2 != pass){
         $("#pass2").next().text("Passwords do not match").css("color","red");
-        return false
+        return false;
     }
     else{
         $("#pass2").next().text("Yes").css("color","green");
@@ -94,7 +93,7 @@ function validAbout(){
 
     if(textArea == false){
         $('#textarea').next().text("Fill this, Phil!").css("color","red");
-        return false
+        return false;
     }
     else{
         $('#textarea').next().text("Yes").css("color","green");
@@ -121,81 +120,24 @@ $(function(){
 
 /******************************************Ajax*******************************************************/
 
- send = function(isvalid1){
 
- 	if(isvalid1==true){
-                $.ajax({
-                    url: "action.php", //Адрес подгружаемой страницы
-                    type:     "POST", //Тип запроса
-                    dataType: "html", //Тип данных
-                    data: {
-                    	fio: $('#fio').val(),
-                    	login: $('#login').val(),
-                    	pass: $('#pass').val(),
-                    	about: $('#textarea').val(),
+function send(){
 
-                    }, 
-                    success: function(response) { //Если все нормально
-                    $("#myDiv").html(response);
+        $.ajax({
+            type: "POST",
+            url: "action.html",
+            data: {
+                fio: $("#fio").val(),
+                name: $("#name").val(),
+                password: $("#pass").val(),
+                about: $("#about").val()
                 },
-                error: function(response) { //Если ошибка
-                $("#myDiv").val("Ошибка при отправке формы");
-                }
-             });
+            /*contentType: "application/json",*/
+            dataType: "html"
+        }).done(function (msg){
+            alert("ok" +msg);
+        }).fail(function (msg, lol){
+            alert("Fail " + lol);
+        });
 
-         $('#regform').trigger('reset');
-         $("span","#regform").text("");
-
-        }
-    }
-
-
-
-// function send(){
-
-// 	var msg = $('#regform').serialize();
-
-//         $.ajax({
-//           type: 'POST',
-//           url: 'action.php',
-//           data: msg,
-//           success: function(data) {
-//             $('.myDiv').html(data);
-//           },
-//           error:  function(xhr, str){
-//                 alert('Возникла ошибка: ' + xhr.responseCode);
-//             }
-//         });
- 
-//     }
-
-  //   var xmlhttp;
-
-  //   xmlhttp = new XMLHttpRequest();
-
-  //   xmlhttp.onreadystatechange=function()
-  // {
-  // if (xmlhttp.readyState==4 && xmlhttp.status==200)
-  //   {
-  //   document.getElementById("myDiv").innerHTML=xmlhttp.responseText;
-  //   }
-  // }
-
-
-  //   xmlhttp.open('GET','action.php');
-  //   xmlhttp.send();
-
-
-        // $.ajax({
-        //    type: "POST",
-        //  url: "action.php",
-        //    	data: {
-        //     fio: $("#fio").val(),
-        //   	name: $("#name").val(),
-        //     password: $("#pass").val(),
-        //     about: $("#about").val()
-        //  },
-        //  dataType: "html"
-        //  }).done(function (){
-        //   $('#fio').val("done");
-        //  });
+}
